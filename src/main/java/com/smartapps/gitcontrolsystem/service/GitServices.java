@@ -7,14 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class GitServices {
     public static void main(String[] args) {
         // init();
-        createBranch("testbranch");
+        //  createBranch("testbranch");
     }
 
-    public static void init() {
+    public static String init() {
         try {
             File dotgit = new File(".dotgit");
             if (!dotgit.exists()) {
@@ -30,82 +33,73 @@ public class GitServices {
                 head.createNewFile();
                 Utils.writeToFile(head, "ref: refs/heads/main");
                 System.out.println("Initialized empty Git repository in .dotgit/");
+                return "Initialized empty Git repository in .dotgit";
             } else {
                 System.out.println("Repository already exists!");
+                return "Repository already exists!";
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return "Error creating Repository!";
         }
     }
 
-    public static void add(String fileName) throws IOException {
-        File file = new File(fileName);
-        if (!file.exists()) {
-            System.out.println("File " + fileName + " does not exist!");
-            return;
-        }
-        // Read file content and compute a hash for tracking
-        String fileContent = new String(Files.readAllBytes(Paths.get(fileName)));
-        String fileHash = Utils.computeHash(fileContent);
-        // Save the file content in the `.dotgit/objects` directory
-        File objectFile = new File(".dotgit/objects/" + fileHash);
-        if (!objectFile.exists()) {
-            objectFile.getParentFile().mkdirs();
-            objectFile.createNewFile();
-            Utils.writeToFile(objectFile, fileContent);
-        }   // Add the file to the staging area (index)
-        File index = new File(".dotgit/index");
-        String entry = fileName + " " + fileHash + "\n";
-       Utils.appendToFile(index, entry);
+//    public static void add(String fileName) throws IOException {
+//        File file = new File(fileName);
+//        if (!file.exists()) {
+//            System.out.println("File " + fileName + " does not exist!");
+//            return;
+//        }
+//        // Read file content and compute a hash for tracking
+//        String fileContent = new String(Files.readAllBytes(Paths.get(fileName)));
+//        String fileHash = Utils.computeHash(fileContent);
+//        // Save the file content in the `.dotgit/objects` directory
+//        File objectFile = new File(".dotgit/objects/" + fileHash);
+//        if (!objectFile.exists()) {
+//            objectFile.getParentFile().mkdirs();
+//            objectFile.createNewFile();
+//            Utils.writeToFile(objectFile, fileContent);
+//        }   // Add the file to the staging area (index)
+//        File index = new File(".dotgit/index");
+//        String entry = fileName + " " + fileHash + "\n";
+//       Utils.appendToFile(index, entry);
+//
+//        System.out.println("File " + fileName + " added to staging area.");
+//    }
 
-        System.out.println("File " + fileName + " added to staging area.");
-    }
-    public static void commit(String message) throws IOException {
-        // Read staged files from the index
-        File index = new File(".dotgit/index");
-        if (!index.exists() || index.length() == 0) {
-            System.out.println("Nothing to commit!");
-            return;
-        }
-        String stagedFiles = new String(Files.readAllBytes(index.toPath()));
-        // Read current HEAD
-        File head = new File(".dotgit/HEAD");
-        String headContent = Utils.readFile(head).trim();
-        String parentCommit = "";
-        if (headContent.startsWith("ref: ")) {
-            String branchName = headContent.substring(5).trim();
-            File branchFile = new File(".dotgit/" + branchName);
-            if (branchFile.exists()) {
-                parentCommit = Utils.readFile(branchFile).trim();
+    public static String add(List<String> fileNames) {
+        StringBuilder output = new StringBuilder();
+        try {
+            for (String fileName : fileNames) {
+                File file = new File(fileName);
+                // Check if the file exists
+                if (!file.exists()) {
+                    System.out.println("File " + fileName + " does not exist!");
+                    continue;
+                }
+                String fileContent = new String(Files.readAllBytes(Paths.get(fileName)));
+                String fileHash = Utils.computeHash(fileContent);
+                // Save the file content in the `.dotgit/objects` directory
+                File objectFile = new File(".dotgit/objects/" + fileHash);
+                if (!objectFile.exists()) {
+                    objectFile.getParentFile().mkdirs();
+                    objectFile.createNewFile();
+                    Utils.writeToFile(objectFile, fileContent);
+                }
+                // Add the file to the staging area (index)
+                File index = new File(".dotgit/index");
+                String entry = fileName + " " + fileHash + "\n";
+                Utils.appendToFile(index, entry);
+
+                System.out.println("File " + fileName + " added to staging area.");
+                output.append("File ").append(fileName).append(" added to staging area.\n");
             }
-        } else {
-            parentCommit = headContent;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error adding to staging area.";
         }
-        // Generate commit hash
-        String commitHash = Utils.computeCommitHash(stagedFiles, parentCommit, message);
-        // Write commit file
-        File commitFile = new File(".dotgit/commits/" + commitHash);
-        commitFile.createNewFile();
-        String commitContent = String.format("""
-                parent: %s
-                timestamp: %s
-                message: %s
-                files:
-                %s
-                """, parentCommit, Instant.now().toString(), message, stagedFiles);
-        Utils.writeToFile(commitFile, commitContent);
-        // Update the current branch (or detached HEAD if no branch)
-        if (headContent.startsWith("ref: ")) {
-            String branchName = headContent.substring(5).trim();
-            File branchFile = new File(".dotgit/" + branchName);
-            Utils.writeToFile(branchFile, commitHash);
-        } else {
-            Utils.writeToFile(head, commitHash);
-        }
-        // Clear the index
-        new PrintWriter(index).close();
 
-        System.out.println("Committed with hash: " + commitHash);
+        return String.valueOf(output);
     }
 
     public static void createBranch(String branchName) {
@@ -153,8 +147,9 @@ public class GitServices {
         }
     }
 
-    public static void switchBranch(String branchName) throws IOException {
+    public static void switchBranch(String branchName){
         File branchFile = new File(".dotgit/refs/heads/" + branchName);
+        try {
         if (!branchFile.exists()) {
             System.out.println("Branch " + branchName + " does not exist!");
             return;
@@ -162,17 +157,27 @@ public class GitServices {
         // Update HEAD to point to the branch
         File head = new File(".dotgit/HEAD");
         Utils.writeToFile(head, "ref: refs/heads/" + branchName);
-        System.out.println("Switched to branch " + branchName);
+        System.out.println("Switched to branch " + branchName);}
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
-    private static String getCurrentBranch() throws IOException {
-        File head = new File(".dotgit/HEAD");
-        String headContent = Utils.readFile(head).trim();
-        if (headContent.startsWith("ref: ")) {
-            return headContent.substring(5).trim().replace("refs/heads/", "");
+    public static String getCurrentBranch() {
+        try {
+            File head = new File(".dotgit/HEAD");
+            String headContent = Utils.readFile(head).trim();
+            if (headContent.startsWith("ref: ")) {
+                return headContent.substring(5).trim().replace("refs/heads/", "");
+            }
+            return "detached HEAD";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error getting current branch";
+
         }
-        return "detached HEAD";
     }
+
     public static void listStagedFiles() throws IOException {
         File indexFile = new File(".dotgit/index");
         if (!indexFile.exists() || indexFile.length() == 0) {
@@ -188,6 +193,26 @@ public class GitServices {
             System.out.println("- " + fileName);
         }
         reader.close();
+    }
+    public static String listBranches() {
+        String listOfBranches="";
+        File branchesDir = new File(".dotgit/refs/heads");
+        if (!branchesDir.exists() || !branchesDir.isDirectory()) {
+            System.out.println("No available branch");
+            return "No available branch";
+        }
+        File[] branchFiles = branchesDir.listFiles();
+        if (branchFiles != null && branchFiles.length > 0) {
+            StringBuilder branchesList = new StringBuilder("Available Branches:\n");
+            for (File branchFile : branchFiles) {
+                branchesList.append(branchFile.getName()).append("\n");
+            }
+            System.out.println("Branches"+ branchesList.toString());
+            return branchesList.toString();
+        } else {
+            System.out.println( "No Branches Found There are no branches available.");
+            return "No Branches Found There are no branches available.";
+        }
     }
 
 }

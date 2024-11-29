@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.smartapps.gitcontrolsystem.controllers.UiController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+<VBox alignment="TOP_CENTER" minHeight="400.0" minWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.smartapps.gitcontrolsystem.controllers.UiController">
+   <children>
+      <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
+         <children>
+            <Button fx:id="btnInit" mnemonicParsing="false" text="GIT INIT" />
+            <Button fx:id="btnAdd" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="GIT ADD" />
+            <MenuButton fx:id="mbCommits" mnemonicParsing="false" text="COMMITS">
+              <items>
+                <MenuItem fx:id="mnCommit" mnemonicParsing="false" text="COMMIT" />
+                <MenuItem fx:id="mnCommitHistory" mnemonicParsing="false" text="VIEW HISTORY" />
+              </items>
+            </MenuButton>
+            <Button fx:id="btnCommit" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="GIT COMMIT" />
+            <MenuButton fx:id="mbBranches" mnemonicParsing="false" text="GIT BRANCH">
+              <items>
+                <MenuItem fx:id="mnCreateBranch" mnemonicParsing="false" text="CREATE BRANCH" />
+                <MenuItem fx:id="mnGetCurrentBranch" mnemonicParsing="false" text="GET CURRENT BRANCH" />
+                  <MenuItem fx:id="mbSwitchBranch" mnemonicParsing="false" text="GIT SWITCH BRANCH" />
+                  <MenuItem fx:id="mnListOfBranches" mnemonicParsing="false" text="GET LIST OF BRANCHES" />
+              </items>
+            </MenuButton>
+            <Button fx:id="btnGetLogs" layoutX="166.0" layoutY="10.0" mnemonicParsing="false" text="GET LOGS" />
+         </children>
+      </HBox>
+      <HBox spacing="5.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TreeView fx:id="TrVList" prefHeight="200.0" prefWidth="200.0" />
+            <TextArea fx:id="tctCommands" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </VBox>

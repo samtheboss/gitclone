@@ -64,6 +64,6 @@ public class MergeAndConflict {
                 writer.println(entry.getKey() + " " + entry.getValue());
             }
         }
-        GitServices.commit(message);
+        GitCommit.commit(message);
     }
 }

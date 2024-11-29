@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesdelivery" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="b5b2c867-006c-406d-a350-4f202c1b41f3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="21"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BAZUDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<parameter name="delivery_number" class="java.lang.Integer"/>
+	<parameter name="logo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["logo.png"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select delivery_orders.*,delivery.*,configurations.*,customers.*,customers.address,delivery.description as desc,
+customers.ledger_name ,customers.ledger_number,configurations.full_name,configurations.CITY,
+configurations.ADDRESS AS ADD1,configurations.PIN_CODE,configurations.VAT_NUMBER,
+configurations.TELEPHONES, (debtors_ledger.balance)as deni from delivery_orders left join
+debtors_ledger on (delivery_orders.assoc_number=debtors_ledger.order_number and delivery_orders.assoc_type=debtors_ledger.document_type)  inner join delivery on(delivery_orders.order_number=delivery.delivery_number)
+inner join customers on(delivery_orders.ledger_number=customers.ledger_number)
+left outer join configurations on(delivery_orders.configuration=configurations.configuration) where delivery.delivery_number=$P{delivery_number} and delivery.delivered_quantity!=0]]>
+	</queryString>
+	<field name="ORDER_NUMBER" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="LEDGER_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LEDGER_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_DATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESCRIPTION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_COUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_COUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_AMOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_AMOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_QUANTITY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ACTUAL_AMOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ACTUAL_AMOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_STATUS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_ACCOUNT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_ACCOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DATE_POSTED" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATE_POSTED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="POSTED_BY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="POSTED_BY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CHECK_OPTION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHECK_OPTION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="INVOICE_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INVOICE_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ZONE_AREA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ZONE_AREA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CATEGORY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CATEGORY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="TAX_AMOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DISCOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DISCOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="OTHER_AMOUNTS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="OTHER_AMOUNTS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="PURCHASE_ORDER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PURCHASE_ORDER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ORDER_LOCATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORDER_LOCATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DELIVERY_METHOD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERY_METHOD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="FISCAL_YEAR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FISCAL_YEAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="FISCAL_MONTH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FISCAL_MONTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="PAYMENT_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PAYMENT_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="REFERENCE_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REFERENCE_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="REFERENCE_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REFERENCE_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="AMOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AMOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="BALANCE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="BALANCE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CARD_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CARD_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="LOYALTY_POINTS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="LOYALTY_POINTS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="POINTS_BALANCE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="POINTS_BALANCE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="REDEEMED_VALUE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="REDEEMED_VALUE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="REDEEM_POINTS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REDEEM_POINTS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="VALUE_AMOUNT1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_AMOUNT1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="VALUE_AMOUNT2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_AMOUNT2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="VALUE_AMOUNT3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_AMOUNT3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="APPROVER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="APPROVER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="APPROVED" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="APPROVED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="APPROVED_BY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="APPROVED_BY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="APPROVAL_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="APPROVAL_DATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="NEXT_STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NEXT_STATUS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="SIGNATURE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SIGNATURE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="PRINT_SERIAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PRINT_SERIAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CONFIGURATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CONFIGURATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DATE_CREATED" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="DATE_CREATED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CREATED_BY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CREATED_BY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DATE_MODIFIED" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="DATE_MODIFIED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="MODIFIED_BY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MODIFIED_BY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="EXPORT_INDICATOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EXPORT_INDICATOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DATE_EXPORTED" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="DATE_EXPORTED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="EXPORTED_BY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EXPORTED_BY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="TRADE_DISCOUNT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRADE_DISCOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="TRADE_DISCOUNT_ACCOUNT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TRADE_DISCOUNT_ACCOUNT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ASSOC_NUMBER" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="ASSOC_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="ASSOC_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ASSOC_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DELIVERY_OPTION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERY_OPTION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="DELIVERY_COMPLETE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERY_COMPLETE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="SALESMAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SALESMAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="POST_FLAG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="POST_FLAG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CURRENCY_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURRENCY_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="BASE_CURRENCY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BASE_CURRENCY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="CURRENCY_RATE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CURRENCY_RATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="BASE_VALUE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="BASE_VALUE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY_ORDERS"/>
+	</field>
+	<field name="SERIAL_NUMBER" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="SERIAL_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="DELIVERY_NUMBER" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERY_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="ITEM_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ITEM_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="ITEM_LOCATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ITEM_LOCATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="ORDERED_QUANTITY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ORDERED_QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="DELIVERED_QUANTITY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERED_QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="UOM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UOM"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="CONVERSION" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CONVERSION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="STOCK_SERIAL" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="STOCK_SERIAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="FULL_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FULL_NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDRESS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CITY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="EMAIL_ADDRESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMAIL_ADDRESS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="BUSINESS_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BUSINESS_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="TELEPHONES" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TELEPHONES"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="ZERO_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ZERO_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CUSTOMER_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CUSTOMER_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SUPPLIER_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SUPPLIER_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="C_AUTONUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="C_AUTONUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="S_AUTONUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="S_AUTONUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SEPARATOR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEPARATOR1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SEPARATOR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEPARATOR2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CURRENT_CNUMBER" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CURRENT_CNUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CURRENT_SNUMBER" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CURRENT_SNUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="USE_SHORT_YEAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USE_SHORT_YEAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="RESET_ANNUALLY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RESET_ANNUALLY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLU_FIXEDLENGTH" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PLU_FIXEDLENGTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUCODE_PREFIX" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PLUCODE_PREFIX"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUCODE_START" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PLUCODE_START"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUCODE_LENGTH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PLUCODE_LENGTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUPRICE_START" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PLUPRICE_START"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUPRICE_LENGTH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PLUPRICE_LENGTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PLUPRICE_DECIMALS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PLUPRICE_DECIMALS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="DECIMAL_POSITIONS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DECIMAL_POSITIONS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="LOGIN_ATTEMPTS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="LOGIN_ATTEMPTS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="IDLE_TIME" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="IDLE_TIME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="FISCAL_START_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="FISCAL_START_DATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="FISCAL_END_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="FISCAL_END_DATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="NEXT_FISCAL_START" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="NEXT_FISCAL_START"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="NEXT_FISCAL_END" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="NEXT_FISCAL_END"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="END_YEAR_MONTH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="END_YEAR_MONTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="YEAR_END" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="YEAR_END"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="NEXT_YEAR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NEXT_YEAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="NEXT_MONTH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NEXT_MONTH"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PERIOD_STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PERIOD_STATUS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="BUDGET_PHASE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BUDGET_PHASE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PERIOD_CLOSEDATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="PERIOD_CLOSEDATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PERIOD_CLOSEDBY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PERIOD_CLOSEDBY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="MAIL_SERVER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MAIL_SERVER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PIN_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PIN_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VAT_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VAT_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="REG_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REG_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SMS_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SMS_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="COUNTRY_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="COUNTRY_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CATEGORY1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CATEGORY1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CATEGORY2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CATEGORY2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CATEGORY3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CATEGORY3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CATEGORY4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CATEGORY4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="OPTION1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPTION1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="OPTION2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPTION2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="OPTION3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPTION3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="OPTION4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPTION4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SALES_MARGIN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="SALES_MARGIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="BARCODE_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BARCODE_TYPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="USE_PLUCODES" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USE_PLUCODES"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="BARCODE_ISITEM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BARCODE_ISITEM"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SECURITY_ACTIVE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SECURITY_ACTIVE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SECURITY_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SECURITY_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="LICENCE_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LICENCE_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="LICENCE_USER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LICENCE_USER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="LICENCE_EXPIRY" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="LICENCE_EXPIRY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="DATE_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATE_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="TIME_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TIME_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="DEF_LOCATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DEF_LOCATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="USER_FIELD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USER_FIELD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="CURRENT_MNUMBER" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CURRENT_MNUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="RECEIPT_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RECEIPT_TEXT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="GENERAL_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GENERAL_TEXT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE_RATE1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_RATE1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE_RATE2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_RATE2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="VALUE_RATE3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VALUE_RATE3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="MEMBER_FORMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MEMBER_FORMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="M_AUTONUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="M_AUTONUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PERIOD_LOCK" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PERIOD_LOCK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SERVER_OS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SERVER_OS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="COM_API" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="COM_API"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="API_KEY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="API_KEY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="SHORT_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SHORT_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="URL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="URL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="USERNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="USERNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="PASSWORD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PASSWORD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="WITHHOLD_TAX" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="WITHHOLD_TAX"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="WITHHOLD_TAX_SALES" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="WITHHOLD_TAX_SALES"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="WTAX_BASE_RATE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="WTAX_BASE_RATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="WT_TAX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="WT_TAX"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="ATT_DIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ATT_DIR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="IMG_DIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IMG_DIR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="INST_DIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INST_DIR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="MAIL_AUTHENTICATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MAIL_AUTHENTICATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="LEDGER_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LEDGER_NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="LEDGER_STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LEDGER_STATUS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="FIRST_THREE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FIRST_THREE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="TOWNCITY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TOWNCITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="WEBSITE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="WEBSITE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CONTACT_PERSON" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CONTACT_PERSON"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CONTACT_TITLE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CONTACT_TITLE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CONTACT_PHONE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CONTACT_PHONE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="REPRESENTATIVE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REPRESENTATIVE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="BASE_LOCATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BASE_LOCATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="DISCOUNT_RATE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DISCOUNT_RATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="ON_CREDIT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ON_CREDIT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CREDIT_LIMIT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CREDIT_LIMIT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CREDIT_PERIOD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CREDIT_PERIOD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="DISTANCE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DISTANCE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="TRANSPORT_RATE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRANSPORT_RATE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="LEDGER_GROUP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LEDGER_GROUP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="SALES_AREA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SALES_AREA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="DELIVERY_PERIOD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DELIVERY_PERIOD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="PAYMENT_METHOD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PAYMENT_METHOD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CREDIT_RATING" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CREDIT_RATING"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="PREF_PRIORITY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PREF_PRIORITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="ACCOUNT_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ACCOUNT_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CHECK_OPTION1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHECK_OPTION1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="CHECK_OPTION2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHECK_OPTION2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="PARENT_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PARENT_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="LAST_ACTIVITY" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="LAST_ACTIVITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="ADDRESS_TO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDRESS_TO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="SYNC_STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SYNC_STATUS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="ID_NUMBER" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="RESTRICT_LOCATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RESTRICT_LOCATION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CUSTOMERS"/>
+	</field>
+	<field name="DESC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESC"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DELIVERY"/>
+	</field>
+	<field name="ADD1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADD1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CONFIGURATIONS"/>
+	</field>
+	<field name="DENI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DENI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DEBTORS_LEDGER"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="159" y="5" width="396" height="15" uuid="d8951f44-33e5-4329-be67-abdaf1230412"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FULL_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="159" y="16" width="396" height="22" isPrintWhenDetailOverflows="true" uuid="a06eefc0-7150-4ffd-9278-ea43afd6f49f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADD1}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="1" y="0" width="158" height="77" uuid="54916af6-655b-42a6-bec0-2776c7f017fe"/>
+				<imageExpression><![CDATA["C:/primesoft/MaliPlus Retail/Images/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="6" width="554" height="20" uuid="07ce95e5-4ad6-450c-a769-63c291052ccb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DELIVERY NOTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="22" width="89" height="15" forecolor="#2500CC" uuid="da26a597-9a43-4fdd-ab6b-48d2d078c75b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Customer Name:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="22" width="152" height="15" uuid="6b96766a-ac04-4d2e-891f-338cd0c0aaba"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEDGER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="37" width="152" height="15" uuid="7c5690ee-a6fe-404f-953f-85a1d2303413"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONTACT_PHONE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="362" y="37" width="52" height="15" forecolor="#2500CC" uuid="99641727-2595-4684-8d34-6d019a584444"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="21" width="118" height="15" uuid="f947b788-1a72-4ff0-baf3-a3fbd45c30d2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELIVERY_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="362" y="52" width="54" height="15" forecolor="#2500CC" uuid="fd692fd6-b260-468e-99ec-6e2148acaa6f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Order Ref:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="20" width="52" height="15" forecolor="#2500CC" uuid="32ddca42-8a48-4274-8913-55bb41b8d69f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Delivery Note No:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="51" width="120" height="15" uuid="e014600b-25fe-4a90-856c-f051a398cec8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASSOC_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="38" width="89" height="15" forecolor="#2500CC" uuid="7b5dfb6b-4eab-4205-b81c-e5ab18b139ee"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Contact Tel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="55" width="89" height="15" forecolor="#2500CC" uuid="0dca6ce8-c46f-489f-a136-d971ef91757a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Location:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="70" width="89" height="15" forecolor="#2500CC" uuid="40257cc5-7a4e-4563-a506-0aa0bc0bf771"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="68" width="91" height="15" forecolor="#2500CC" uuid="454766d5-3321-44d4-8f0f-de28e2f1b1f2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Goods Released By:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="453" y="66" width="95" height="16" uuid="46930a3b-f7af-4b8a-8f51-4757499ac7ce"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APPROVED_BY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="53" width="152" height="17" uuid="508f6684-844a-4648-9006-479cbc044e2a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOWNCITY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="6" width="220" height="14" uuid="40b42d81-e1a6-42e9-8fac-db83caece58b"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PIN:  "+$F{VAT_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="3" width="555" height="1" uuid="7cfebf76-04a3-494a-9e05-2313727d4e36"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd/MM/yyyy          h.mm a">
+				<reportElement x="430" y="38" width="119" height="14" uuid="6c7d4b92-873a-4740-8964-cb139f7f98ac"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{APPROVAL_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="83" y="-1" width="166" height="15" uuid="b4bf724c-b480-4ba8-819f-a67345d80b07"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1" uuid="43004bfb-c9aa-4574-a2c8-e07907d97150"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="7530fddd-ce97-4012-b1be-57e67323b114"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="71" height="15" uuid="1cb40eb6-a372-448b-b613-afdab66e0fbf"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<textField>
+				<reportElement x="159" y="0" width="395" height="13" uuid="75570259-5c98-4fc5-a754-c4eaaad7aba9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="83" y="0" width="26" height="13" uuid="fd219e29-5d1c-4f6d-8055-d169104a6b12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONVERSION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.###;(#,###.###-)">
+				<reportElement x="0" y="0" width="71" height="13" uuid="ceee42d4-268d-49f7-a1cc-d9faca8ee8e9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDERED_QUANTITY}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="78" y="-14" width="1" height="28" uuid="220b1613-da52-4231-a44c-3ff40670da81"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-101" width="1" height="114" uuid="19d1da55-8e6b-4bec-ac74-509e1b17bd8b"/>
+			</line>
+			<line>
+				<reportElement x="554" y="-102" width="1" height="116" uuid="8e8c8c46-f744-4095-94cb-005b23559751"/>
+			</line>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1" uuid="121a88e8-55f1-4cd0-9061-eb3a7b288845"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.##">
+				<reportElement x="111" y="0" width="26" height="13" uuid="b9d0d9d5-7c46-4b53-8197-b3b9ab15df53"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UOM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="155">
+			<staticText>
+				<reportElement x="7" y="-2" width="472" height="18" forecolor="#2500CC" uuid="6852676d-a007-4b23-93e7-bb0031f5cb30"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Please receive  your goods in good  condition]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="27" width="41" height="15" forecolor="#000000" uuid="215f4bd6-6551-44cd-876f-70ead1649939"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="481" y="30" width="68" height="12" forecolor="#000000" uuid="35495535-2fbc-418c-9e04-21c6b3fb0ba4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APPROVAL_DATE}.format("dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="42" width="330" height="1" uuid="2968a880-ae13-4bb9-af8f-897cc8b48afc"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="47" uuid="bc370512-4790-44f2-9ee1-c278d7815f1c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="47" uuid="0a430574-4c5b-46de-a999-13e68cf77510"/>
+			</line>
+			<line>
+				<reportElement x="0" y="47" width="555" height="1" uuid="a13ded77-8ee9-4de9-bda4-161e4f483830"/>
+			</line>
+			<textField>
+				<reportElement x="3" y="55" width="545" height="13" uuid="cebe9c56-1f0c-456f-85be-8ef79071730e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ACCOUNT NAME:   " +$F{FULL_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="3" y="81" width="545" height="13" isPrintWhenDetailOverflows="true" uuid="4894e0c6-0128-42ff-aa9e-d86014dd8210"/>
+				<textElement markup="none">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ACCOUNT NO.:    "+$F{RECEIPT_TEXT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="140" width="144" height="15" uuid="333d77d9-2199-4fd7-accf-669c03284e49"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MPESA PAYBILL NO: 533054]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="140" width="183" height="15" uuid="44dfbb24-9fbc-479c-a6e3-2b2861fd1054"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACCOUNT NUMBER: YOUR NAME]]></text>
+			</staticText>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="465" y="135" width="84" height="20" uuid="00f972bc-5ada-4cc8-aa70-9ad597a666a1"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
