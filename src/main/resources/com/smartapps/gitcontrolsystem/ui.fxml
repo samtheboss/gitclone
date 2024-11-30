@@ -21,7 +21,7 @@
                 <MenuItem fx:id="mnCommitHistory" mnemonicParsing="false" text="VIEW HISTORY" />
               </items>
             </MenuButton>
-            <Button fx:id="btnCommit" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="GIT COMMIT" />
+            <Button fx:id="btnMerger" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="GIT MERGE" />
             <MenuButton fx:id="mbBranches" mnemonicParsing="false" text="GIT BRANCH">
               <items>
                 <MenuItem fx:id="mnCreateBranch" mnemonicParsing="false" text="CREATE BRANCH" />

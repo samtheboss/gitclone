@@ -30,4 +30,12 @@ public class Utils {
     public static String computeHash(String content) {
         return String.valueOf(content.hashCode());
     }
+    public static String getBranchCommit(String branchName) throws IOException {
+        File branchRefFile = new File(".dotgit/refs/heads/" + branchName);
+        if (!branchRefFile.exists()) {
+            System.out.println("Branch file not found for: " + branchName);
+            return null;
+        }
+        return new String(Files.readAllBytes(branchRefFile.toPath())).trim();
+    }
 }

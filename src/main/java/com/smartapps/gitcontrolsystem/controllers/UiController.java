@@ -1,7 +1,6 @@
 package com.smartapps.gitcontrolsystem.controllers;
 
-import com.smartapps.gitcontrolsystem.service.GitCommit;
-import com.smartapps.gitcontrolsystem.service.GitServices;
+import com.smartapps.gitcontrolsystem.service.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -28,6 +27,8 @@ public class UiController implements Initializable {
 
     @FXML
     private Button btnAdd;
+    @FXML
+    private Button btnMerger;
 
     @FXML
     private MenuButton mbCommits;
@@ -97,6 +98,14 @@ public class UiController implements Initializable {
             GitServices.switchBranch(value);
         });mnListOfBranches.setOnAction(e -> {
             tctCommands.setText(GitServices.listBranches());
+        });
+        btnMerger.setOnAction(e->{
+            String value = showInputPopup();
+            try {
+                MergeAndConflict.merge(value);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
 
