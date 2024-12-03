@@ -19,6 +19,7 @@
               <items>
                 <MenuItem fx:id="mnCommit" mnemonicParsing="false" text="COMMIT" />
                 <MenuItem fx:id="mnCommitHistory" mnemonicParsing="false" text="VIEW HISTORY" />
+                  <MenuItem fx:id="mnAllCommit" mnemonicParsing="false" text="GET ALL COMMIT" />
               </items>
             </MenuButton>
             <Button fx:id="btnMerger" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="GIT MERGE" />

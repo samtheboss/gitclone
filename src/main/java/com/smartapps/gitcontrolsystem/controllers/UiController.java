@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -52,6 +53,8 @@ public class UiController implements Initializable {
     private MenuItem mbSwitchBranch;
     @FXML
     private MenuItem mnListOfBranches;
+    @FXML
+    private MenuItem mnAllCommit;
 
     @FXML
     private Button btnGetLogs;
@@ -86,20 +89,32 @@ public class UiController implements Initializable {
             GitServices.createBranch(value);
 
         });
-        mnCommit.setOnAction(e->{
+        mnCommit.setOnAction(e -> {
             String value = showInputPopup();
             GitCommit.commit(value);
         });
-        mnCommitHistory.setOnAction(e->{
-            tctCommands.setText(GitCommit.viewCommitHistory()); ;
+        mnCommitHistory.setOnAction(e -> {
+            tctCommands.setText(GitCommit.viewCommitHistory());
+            ;
         });
         mbSwitchBranch.setOnAction(e -> {
             String value = showInputPopup();
             GitServices.switchBranch(value);
-        });mnListOfBranches.setOnAction(e -> {
+        });
+        mnListOfBranches.setOnAction(e -> {
             tctCommands.setText(GitServices.listBranches());
         });
-        btnMerger.setOnAction(e->{
+        mnAllCommit.setOnAction(e -> {
+            StringBuilder commitHash = new StringBuilder();
+            List<String> listOfCommitHashMaps =
+                    GitCommitFiles.getAllCommitHashes();
+            assert listOfCommitHashMaps != null;
+            for (String m : listOfCommitHashMaps) {
+                commitHash.append(m).append("\n");
+            }
+            //tctCommands.setText(commitHash.toString());
+        });
+        btnMerger.setOnAction(e -> {
             String value = showInputPopup();
             try {
                 MergeAndConflict.merge(value);
@@ -107,6 +122,33 @@ public class UiController implements Initializable {
                 throw new RuntimeException(ex);
             }
         });
+        tctCommands.setOnKeyReleased(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                String inputText = tctCommands.getText().trim().replaceAll("\\s+", " ");
+
+                if ("git init".equals(inputText)) {
+                    // Initialize Git repository
+                    tctCommands.setText(GitServices.init());
+                } else if ("git add".equals(inputText)) {
+                    // Open file chooser for adding files
+                    openFileChooser();
+                } else if (inputText.matches("git commit -m '.*'")) {
+                    // Extract and handle the commit message
+                    String commitMessage = inputText.replaceFirst("git commit -m '", "").replaceFirst("'$", "");
+                    try {
+                        GitCommit.commit(commitMessage);
+                        tctCommands.setText("Committed: " + commitMessage);
+                    } catch (Exception ex) {
+                        System.err.println("Commit failed: " + ex.getMessage());
+                        tctCommands.setText("Commit failed: " + ex.getMessage());
+                    }
+                } else {
+                    // Handle unknown commands
+                    tctCommands.setText("Unknown command: " + inputText);
+                }
+            }
+        });
+
     }
 
     private void openFileChooser() {
